@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B9 Chauhan Apartment-03 - Maintenance Expense Register</title>
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 flex h-screen overflow-hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between hidden md:flex">
+    <div>
+      <div class="p-4 border-b border-slate-800 flex items-center space-x-3">
+        <div class="p-2 bg-blue-600 text-white rounded-lg"><i data-lucide="building-2"></i></div>
+        <div>
+          <h1 class="font-bold text-white text-sm">B9 Chauhan Apartment-03</h1>
+          <p class="text-xs text-slate-400">Maintenance Expense Register</p>
+        </div>
+      </div>
+      <nav class="p-4 space-y-1">
+        <a href="#dashboard" onclick="showTab('dashboard')" id="nav-dashboard" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white font-medium text-sm">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span>
+        </a>
+        <a href="#collection" onclick="showTab('collection')" id="nav-collection" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white font-medium text-sm">
+          <i data-lucide="indian-rupee" class="w-4 h-4"></i><span>Collection</span>
+        </a>
+        <a href="#expenses" onclick="showTab('expenses')" id="nav-expenses" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white font-medium text-sm">
+          <i data-lucide="receipt" class="w-4 h-4"></i><span>Expenses</span>
+        </a>
+        <a href="#ficwise" onclick="showTab('ficwise')" id="nav-ficwise" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white font-medium text-sm">
+          <i data-lucide="users" class="w-4 h-4"></i><span>FIC Wise</span>
+        </a>
+        <a href="#reports" onclick="showTab('reports')" id="nav-reports" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white font-medium text-sm">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i><span>Reports</span>
+        </a>
+      </nav>
+    </div>
+    <div class="p-4 border-t border-slate-800">
+      <a href="#admin" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400 text-sm">
+        <i data-lucide="settings" class="w-4 h-4"></i><span>Admin</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="flex-1 flex flex-col h-screen overflow-y-auto">
+
+    <!-- TOP HEADER -->
+    <header class="bg-slate-900 text-white p-4 flex justify-between items-center md:hidden">
+      <div class="flex items-center space-x-2">
+        <i data-lucide="building-2" class="text-blue-500"></i>
+        <span class="font-bold text-sm">B9 Chauhan Apartment-03</span>
+      </div>
+      <select class="bg-slate-800 text-xs px-2 py-1 rounded border border-slate-700">
+        <option>Sep 2026</option>
+      </select>
+    </header>
+
+    <div class="p-6 space-y-6">
+
+      <!-- TOP FILTER & TITLE BAR -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">Dashboard</h2>
+          <p class="text-xs text-slate-500">Building Overview</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="flex items-center bg-white border rounded-lg px-3 py-1.5 shadow-sm text-sm">
+            <i data-lucide="calendar" class="w-4 h-4 text-slate-400 mr-2"></i>
+            <select class="bg-transparent border-none text-slate-700 font-medium focus:outline-none">
+              <option>Sep 2026</option>
+            </select>
+          </div>
+          <div class="flex items-center bg-white border rounded-lg px-3 py-1.5 shadow-sm text-sm">
+            <i data-lucide="user-check" class="w-4 h-4 text-slate-400 mr-2"></i>
+            <select class="bg-transparent border-none text-slate-700 font-medium focus:outline-none">
+              <option>Admin</option>
+            </select>
+          </div>
+          <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2 shadow-sm">
+            <i data-lucide="plus" class="w-4 h-4"></i><span>Add Expense</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- METRIC CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-emerald-800">Total Collection</p>
+            <h3 class="text-2xl font-bold text-emerald-900 mt-1">₹ 1,15,000</h3>
+            <p class="text-[10px] text-emerald-600 mt-1">(Apr – Sep 2026)</p>
+          </div>
+          <div class="p-3 bg-emerald-500 text-white rounded-full"><i data-lucide="indian-rupee"></i></div>
+        </div>
+
+        <div class="bg-rose-50 border border-rose-100 p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-rose-800">Total Expenses</p>
+            <h3 class="text-2xl font-bold text-rose-900 mt-1">₹ 90,755</h3>
+            <p class="text-[10px] text-rose-600 mt-1">(Apr – Sep 2026)</p>
+          </div>
+          <div class="p-3 bg-rose-500 text-white rounded-full"><i data-lucide="trending-down"></i></div>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-blue-800">Current Balance</p>
+            <h3 class="text-2xl font-bold text-blue-900 mt-1">₹ 24,245</h3>
+            <p class="text-[10px] text-blue-600 mt-1">(Apr – Sep 2026)</p>
+          </div>
+          <div class="p-3 bg-blue-500 text-white rounded-full"><i data-lucide="wallet"></i></div>
+        </div>
+
+        <div class="bg-purple-50 border border-purple-100 p-4 rounded-xl flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-purple-800">Reserve Fund</p>
+            <h3 class="text-2xl font-bold text-purple-900 mt-1">₹ 43,527</h3>
+            <p class="text-[10px] text-purple-600 mt-1">(Available)</p>
+          </div>
+          <div class="p-3 bg-purple-500 text-white rounded-full"><i data-lucide="shield-check"></i></div>
+        </div>
+      </div>
+
+      <!-- SECONDARY STATS -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div class="bg-white p-3 rounded-lg border text-center">
+          <p class="text-xs text-slate-500">Total Flats</p>
+          <p class="text-lg font-bold text-slate-800">26</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border text-center">
+          <p class="text-xs text-slate-500">Paid Flats</p>
+          <p class="text-lg font-bold text-emerald-600">18</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border text-center">
+          <p class="text-xs text-slate-500">Pending Flats</p>
+          <p class="text-lg font-bold text-rose-600">8</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border text-center">
+          <p class="text-xs text-slate-500">Collection %</p>
+          <p class="text-lg font-bold text-amber-600">69%</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border text-center">
+          <p class="text-xs text-slate-500">Expense %</p>
+          <p class="text-lg font-bold text-cyan-600">79%</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border text-center">
+          <p class="text-xs text-slate-500">Status</p>
+          <p class="text-lg font-bold text-blue-600">Active</p>
+        </div>
+      </div>
+
+      <!-- TABLE & LIST DISPLAY -->
+      <div class="bg-white border rounded-xl shadow-sm overflow-hidden">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h3 class="font-bold text-slate-800 text-sm">Recent Expense Records</h3>
+          <input type="text" placeholder="Search..." class="border rounded-lg text-xs px-3 py-1.5 w-48">
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 border-b text-slate-500">
+              <tr>
+                <th class="p-3">Date</th>
+                <th class="p-3">Month</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">Description</th>
+                <th class="p-3">Amount</th>
+                <th class="p-3">Paid To</th>
+                <th class="p-3">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y text-slate-700">
+              <tr>
+                <td class="p-3">10-Sep-2026</td>
+                <td class="p-3">Sep 26</td>
+                <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-medium">Cleaning</span></td>
+                <td class="p-3">Gutter Cleaning</td>
+                <td class="p-3 font-semibold">₹2,700</td>
+                <td class="p-3">Local Vendor</td>
+                <td class="p-3"><button class="bg-blue-600 text-white px-2 py-1 rounded text-[10px]">View</button></td>
+              </tr>
+              <tr>
+                <td class="p-3">05-Sep-2026</td>
+                <td class="p-3">Sep 26</td>
+                <td class="p-3"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-medium">Lift</span></td>
+                <td class="p-3">Lift AMC</td>
+                <td class="p-3 font-semibold">₹5,500</td>
+                <td class="p-3">Lift Service</td>
+                <td class="p-3"><button class="bg-blue-600 text-white px-2 py-1 rounded text-[10px]">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADD EXPENSE MODAL -->
+  <div id="expenseModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex justify-center items-center hidden z-50">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden border">
+      <div class="p-4 border-b flex justify-between items-center bg-slate-50">
+        <h3 class="font-bold text-slate-800">Add New Expense</h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
+      </div>
+      <form class="p-4 space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-600 mb-1">Date *</label>
+            <input type="date" value="2026-09-10" class="w-full border rounded p-2 focus:ring-1 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block font-medium text-slate-600 mb-1">Month *</label>
+            <select class="w-full border rounded p-2">
+              <option>Sep 2026</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-600 mb-1">Category *</label>
+            <select class="w-full border rounded p-2">
+              <option>Cleaning</option>
+              <option>Lift</option>
+              <option>Electricity</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium text-slate-600 mb-1">Amount *</label>
+            <input type="number" value="2700" class="w-full border rounded p-2">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 mb-1">Description *</label>
+          <input type="text" value="Gutter Cleaning" class="w-full border rounded p-2">
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 mb-1">Upload Bill / Photo</label>
+          <input type="file" class="w-full border rounded p-1 text-slate-500">
+        </div>
+
+        <div class="pt-3 border-t flex justify-end space-x-2">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded bg-slate-100 text-slate-600">Cancel</button>
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-blue-600 text-white rounded font-medium">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function openModal() {
+      document.getElementById('expenseModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('expenseModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
