@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280">
     <title>B9 Chauhan Apartment-03 - Maintenance Register</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,408 +12,190 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; min-width: 1200px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 pb-16 md:pb-0">
+<body class="bg-slate-50 text-slate-800">
 
     <!-- TOP NAVBAR -->
-    <header class="bg-slate-900 text-white sticky top-0 z-40 shadow-md">
-        <div class="flex items-center justify-between px-4 py-3">
+    <header class="bg-[#0f172a] text-white sticky top-0 z-50 border-b border-slate-800">
+        <div class="flex items-center justify-between px-6 py-3">
             <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-building-user text-2xl text-blue-400"></i>
+                <div class="bg-blue-600 p-2 rounded-lg"><i class="fa-solid fa-building text-xl text-white"></i></div>
                 <div>
-                    <h1 class="font-bold text-base md:text-lg leading-tight">B9 Chauhan Apartment-03</h1>
+                    <h1 class="font-bold text-lg leading-tight">B9 Chauhan Apartment-03</h1>
                     <p class="text-xs text-slate-400">Maintenance Expense Register</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-2 md:space-x-4">
-                <select class="bg-slate-800 text-xs md:text-sm text-slate-200 border border-slate-700 rounded-lg px-2.5 py-1.5 focus:outline-none">
-                    <option>Sep 2026</option>
-                    <option>Aug 2026</option>
-                    <option>Jul 2026</option>
-                </select>
-                <button class="flex items-center space-x-1.5 bg-slate-800 text-xs md:text-sm text-slate-200 border border-slate-700 rounded-lg px-3 py-1.5">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
+                    <i class="fa-regular fa-calendar text-slate-400"></i>
+                    <select class="bg-transparent text-slate-200 focus:outline-none cursor-pointer">
+                        <option>Sep 2026</option>
+                        <option>Aug 2026</option>
+                    </select>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
                     <i class="fa-solid fa-user-shield text-blue-400"></i>
                     <span>Admin</span>
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
+                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                </div>
             </div>
         </div>
     </header>
 
-    <div class="flex flex-col md:flex-row min-h-[calc(100vh-61px)]">
+    <div class="flex min-h-[calc(100vh-61px)]">
         
-        <!-- SIDEBAR (DESKTOP) -->
-        <aside class="hidden md:block w-64 bg-slate-900 text-slate-300 flex-shrink-0 p-4 border-t border-slate-800">
-            <nav class="space-y-1">
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition bg-blue-600 text-white">
-                    <i class="fa-solid fa-chart-pie w-5"></i><span>Dashboard</span>
-                </button>
-                <button onclick="switchTab('collection')" id="nav-collection" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition hover:bg-slate-800 hover:text-white">
-                    <i class="fa-solid fa-indian-rupee-sign w-5"></i><span>Collection</span>
-                </button>
-                <button onclick="switchTab('expenses')" id="nav-expenses" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition hover:bg-slate-800 hover:text-white">
-                    <i class="fa-solid fa-receipt w-5"></i><span>Expenses</span>
-                </button>
-                <button onclick="switchTab('fic')" id="nav-fic" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition hover:bg-slate-800 hover:text-white">
-                    <i class="fa-solid fa-user-group w-5"></i><span>FIC Wise</span>
-                </button>
-                <button onclick="switchTab('reports')" id="nav-reports" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition hover:bg-slate-800 hover:text-white">
-                    <i class="fa-solid fa-chart-line w-5"></i><span>Reports</span>
-                </button>
-                <button onclick="switchTab('admin')" id="nav-admin" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition hover:bg-slate-800 hover:text-white">
-                    <i class="fa-solid fa-gear w-5"></i><span>Admin</span>
-                </button>
-            </nav>
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-[#0f172a] text-slate-300 flex-shrink-0 p-4 border-r border-slate-800 space-y-1">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-lg">
+                <i class="fa-solid fa-chart-pie w-5 text-sm"></i><span>Dashboard</span>
+            </button>
+            <button onclick="switchTab('collection')" id="nav-collection" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-indian-rupee-sign w-5 text-sm"></i><span>Collection</span>
+            </button>
+            <button onclick="switchTab('expenses')" id="nav-expenses" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-receipt w-5 text-sm"></i><span>Expenses</span>
+            </button>
+            <button onclick="switchTab('fic')" id="nav-fic" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-users w-5 text-sm"></i><span>FIC Wise</span>
+            </button>
+            <button onclick="switchTab('reports')" id="nav-reports" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-chart-line w-5 text-sm"></i><span>Reports</span>
+            </button>
+            <button onclick="switchTab('admin')" id="nav-admin" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-gear w-5 text-sm"></i><span>Admin</span>
+            </button>
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+        <main class="flex-1 p-6 overflow-y-auto">
             
             <!-- 1. DASHBOARD TAB -->
             <div id="tab-dashboard" class="tab-content space-y-6">
                 <div>
                     <h2 class="text-xl font-bold text-slate-800">Dashboard</h2>
-                    <p class="text-xs text-slate-500">Building Overview</p>
+                    <p class="text-xs text-slate-400">Building Overview</p>
                 </div>
 
                 <!-- TOP STAT CARDS -->
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                    <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl flex justify-between items-center shadow-sm">
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-emerald-50/60 border border-emerald-100 p-4 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-xs font-semibold text-emerald-800">Total Collection</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-emerald-900 mt-1">₹ 1,15,000</h3>
-                            <span class="text-[10px] text-emerald-600">(Apr – Sep 2026)</span>
+                            <h3 class="text-2xl font-bold text-emerald-950 mt-1">₹ 1,15,000</h3>
+                            <span class="text-[10px] text-emerald-600 font-medium">(Apr – Sep 2026)</span>
                         </div>
-                        <div class="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-lg"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                        <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-emerald-200"><i class="fa-solid fa-indian-rupee-sign"></i></div>
                     </div>
 
-                    <div class="bg-rose-50 border border-rose-100 p-4 rounded-2xl flex justify-between items-center shadow-sm">
+                    <div class="bg-rose-50/60 border border-rose-100 p-4 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-xs font-semibold text-rose-800">Total Expenses</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-rose-900 mt-1">₹ 90,755</h3>
-                            <span class="text-[10px] text-rose-600">(Apr – Sep 2026)</span>
+                            <h3 class="text-2xl font-bold text-rose-950 mt-1">₹ 90,755</h3>
+                            <span class="text-[10px] text-rose-600 font-medium">(Apr – Sep 2026)</span>
                         </div>
-                        <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                        <div class="w-10 h-10 bg-rose-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-rose-200"><i class="fa-solid fa-arrow-trend-down"></i></div>
                     </div>
 
-                    <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl flex justify-between items-center shadow-sm">
+                    <div class="bg-blue-50/60 border border-blue-100 p-4 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-xs font-semibold text-blue-800">Current Balance</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-blue-900 mt-1">₹ 24,245</h3>
-                            <span class="text-[10px] text-blue-600">(Apr – Sep 2026)</span>
+                            <h3 class="text-2xl font-bold text-blue-950 mt-1">₹ 24,245</h3>
+                            <span class="text-[10px] text-blue-600 font-medium">(Apr – Sep 2026)</span>
                         </div>
-                        <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg"><i class="fa-solid fa-wallet"></i></div>
+                        <div class="w-10 h-10 bg-blue-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-blue-200"><i class="fa-solid fa-wallet"></i></div>
                     </div>
 
-                    <div class="bg-purple-50 border border-purple-100 p-4 rounded-2xl flex justify-between items-center shadow-sm">
+                    <div class="bg-purple-50/60 border border-purple-100 p-4 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-xs font-semibold text-purple-800">Reserve Fund</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-purple-900 mt-1">₹ 43,527</h3>
-                            <span class="text-[10px] text-purple-600">(Available)</span>
+                            <h3 class="text-2xl font-bold text-purple-950 mt-1">₹ 43,527</h3>
+                            <span class="text-[10px] text-purple-600 font-medium">(Available)</span>
                         </div>
-                        <div class="w-10 h-10 bg-purple-500 text-white rounded-full flex items-center justify-center text-lg"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="w-10 h-10 bg-purple-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-purple-200"><i class="fa-solid fa-shield-halved"></i></div>
                     </div>
                 </div>
 
-                <!-- MINI STATS -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-sm">
-                        <p class="text-xs text-slate-500">Total Flats</p>
+                <!-- MINI STATS ROW -->
+                <div class="grid grid-cols-5 gap-4">
+                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
+                        <p class="text-[11px] font-medium text-slate-500">Total Flats</p>
                         <p class="text-lg font-bold text-slate-800">26</p>
                     </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-sm">
-                        <p class="text-xs text-slate-500">Paid Flats</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
+                        <p class="text-[11px] font-medium text-slate-500">Paid Flats</p>
                         <p class="text-lg font-bold text-emerald-600">18</p>
                     </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-sm">
-                        <p class="text-xs text-slate-500">Pending Flats</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
+                        <p class="text-[11px] font-medium text-slate-500">Pending Flats</p>
                         <p class="text-lg font-bold text-rose-600">8</p>
                     </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-sm">
-                        <p class="text-xs text-slate-500">Collection %</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
+                        <p class="text-[11px] font-medium text-slate-500">Collection %</p>
                         <p class="text-lg font-bold text-amber-600">69%</p>
                     </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-sm col-span-2 md:col-span-1">
-                        <p class="text-xs text-slate-500">Expense %</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
+                        <p class="text-[11px] font-medium text-slate-500">Expense %</p>
                         <p class="text-lg font-bold text-blue-600">79%</p>
                     </div>
                 </div>
 
-                <!-- CHARTS -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <h4 class="text-sm font-bold text-slate-700 mb-4">Collection vs Expense (Last 6 Months)</h4>
+                <!-- CHARTS ROW -->
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <h4 class="text-xs font-bold text-slate-700 mb-4 uppercase tracking-wider">Collection vs Expense (Last 6 Months)</h4>
                         <div class="h-64"><canvas id="barChart"></canvas></div>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <h4 class="text-sm font-bold text-slate-700 mb-4">Expense by Category</h4>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <h4 class="text-xs font-bold text-slate-700 mb-4 uppercase tracking-wider">Expense by Category</h4>
                         <div class="h-64 flex justify-center"><canvas id="donutChart"></canvas></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. COLLECTION TAB -->
-            <div id="tab-collection" class="tab-content hidden space-y-4">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">Maintenance Collection</h2>
-                        <p class="text-xs text-slate-500">Flat wise payment records</p>
-                    </div>
-                    <button class="bg-blue-600 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-xl shadow hover:bg-blue-700 flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> Add Payment
-                    </button>
-                </div>
-
-                <!-- FILTERS -->
-                <div class="bg-white p-3 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                    <input type="text" placeholder="Search Flat / Name" class="border rounded-lg p-2 focus:outline-none col-span-2 md:col-span-1">
-                    <select class="border rounded-lg p-2 focus:outline-none"><option>All Status</option><option>Paid</option><option>Pending</option></select>
-                    <select class="border rounded-lg p-2 focus:outline-none"><option>All Floors</option><option>1st Floor</option><option>2nd Floor</option></select>
-                    <select class="border rounded-lg p-2 focus:outline-none"><option>Sep 2026</option></select>
-                </div>
-
-                <!-- TABLE -->
-                <div class="bg-white rounded-2xl border border-slate-200 overflow-x-auto shadow-sm">
-                    <table class="w-full text-left text-xs md:text-sm">
-                        <thead class="bg-slate-100 text-slate-600 font-semibold border-b">
-                            <tr>
-                                <th class="p-3">Flat No</th>
-                                <th class="p-3">Resident Name</th>
-                                <th class="p-3">Monthly Fee</th>
-                                <th class="p-3">Paid Date</th>
-                                <th class="p-3">Status</th>
-                                <th class="p-3">Mode</th>
-                                <th class="p-3 text-right">Receipt</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="p-3 font-semibold">A101</td>
-                                <td class="p-3">Rajesh Sharma</td>
-                                <td class="p-3">₹1,000</td>
-                                <td class="p-3">05-Sep-2026</td>
-                                <td class="p-3"><span class="bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full text-[11px]">Paid</span></td>
-                                <td class="p-3">UPI</td>
-                                <td class="p-3 text-right"><button class="text-blue-600 font-semibold">View</button></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-semibold">A102</td>
-                                <td class="p-3">Sunita Verma</td>
-                                <td class="p-3">₹1,000</td>
-                                <td class="p-3 text-slate-400">-</td>
-                                <td class="p-3"><span class="bg-rose-100 text-rose-700 font-semibold px-2 py-0.5 rounded-full text-[11px]">Pending</span></td>
-                                <td class="p-3 text-slate-400">-</td>
-                                <td class="p-3 text-right"><button class="text-slate-400 cursor-not-allowed">View</button></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-semibold">A103</td>
-                                <td class="p-3">Amit Singh</td>
-                                <td class="p-3">₹1,000</td>
-                                <td class="p-3">03-Sep-2026</td>
-                                <td class="p-3"><span class="bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full text-[11px]">Paid</span></td>
-                                <td class="p-3">Cash</td>
-                                <td class="p-3 text-right"><button class="text-blue-600 font-semibold">View</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 3. EXPENSES TAB -->
-            <div id="tab-expenses" class="tab-content hidden space-y-4">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">Expense Register</h2>
-                        <p class="text-xs text-slate-500">Track all building expenditures</p>
-                    </div>
-                    <button onclick="toggleModal(true)" class="bg-blue-600 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-xl shadow hover:bg-blue-700 flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> Add Expense
-                    </button>
-                </div>
-
-                <!-- TABLE -->
-                <div class="bg-white rounded-2xl border border-slate-200 overflow-x-auto shadow-sm">
-                    <table class="w-full text-left text-xs md:text-sm">
-                        <thead class="bg-slate-100 text-slate-600 font-semibold border-b">
-                            <tr>
-                                <th class="p-3">Date</th>
-                                <th class="p-3">Category</th>
-                                <th class="p-3">Description</th>
-                                <th class="p-3">Amount</th>
-                                <th class="p-3">Paid To</th>
-                                <th class="p-3 text-right">Bill</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="p-3">10-Sep-2026</td>
-                                <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md font-semibold text-xs">Cleaning</span></td>
-                                <td class="p-3">Gutter Cleaning</td>
-                                <td class="p-3 font-bold">₹2,700</td>
-                                <td class="p-3">Local Vendor</td>
-                                <td class="p-3 text-right"><button class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg font-semibold text-xs border border-blue-200">View</button></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3">05-Sep-2026</td>
-                                <td class="p-3"><span class="bg-purple-100 text-purple-800 px-2.5 py-1 rounded-md font-semibold text-xs">Lift</span></td>
-                                <td class="p-3">Lift AMC Maintenance</td>
-                                <td class="p-3 font-bold">₹5,500</td>
-                                <td class="p-3">Lift Service Co.</td>
-                                <td class="p-3 text-right"><button class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg font-semibold text-xs border border-blue-200">View</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 4. FIC WISE TAB -->
-            <div id="tab-fic" class="tab-content hidden space-y-4">
-                <h2 class="text-xl font-bold text-slate-800">Floor In-Charge (FIC) Summary</h2>
-                <div class="bg-white rounded-2xl border border-slate-200 overflow-x-auto shadow-sm">
-                    <table class="w-full text-left text-xs md:text-sm">
-                        <thead class="bg-slate-100 text-slate-600 font-semibold border-b">
-                            <tr>
-                                <th class="p-3">Floor</th>
-                                <th class="p-3">FIC Name</th>
-                                <th class="p-3">Collection</th>
-                                <th class="p-3">Pending</th>
-                                <th class="p-3">Expense</th>
-                                <th class="p-3 text-right">Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="p-3 font-semibold">Ground Floor</td>
-                                <td class="p-3">Rajesh Sharma</td>
-                                <td class="p-3 text-emerald-600 font-semibold">₹18,000</td>
-                                <td class="p-3 text-rose-600 font-semibold">₹2,000</td>
-                                <td class="p-3">₹8,500</td>
-                                <td class="p-3 text-right font-bold">₹7,500</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-semibold">1st Floor</td>
-                                <td class="p-3">Sunita Verma</td>
-                                <td class="p-3 text-emerald-600 font-semibold">₹17,000</td>
-                                <td class="p-3 text-rose-600 font-semibold">₹3,000</td>
-                                <td class="p-3">₹7,800</td>
-                                <td class="p-3 text-right font-bold">₹6,200</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 5. REPORTS TAB -->
-            <div id="tab-reports" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-800">Monthly Report</h2>
-                    <button class="bg-blue-600 text-white text-xs px-3 py-2 rounded-xl font-semibold shadow flex items-center gap-1.5">
-                        <i class="fa-solid fa-file-pdf"></i> Generate PDF
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 text-center">
-                    <i class="fa-solid fa-file-invoice text-4xl text-blue-500 mb-2"></i>
-                    <p class="font-semibold text-slate-700">Monthly Financial Summary Ready</p>
-                    <p class="text-xs text-slate-400 mt-1">Download complete breakdown of collection & expenses in PDF format.</p>
-                </div>
-            </div>
-
-            <!-- 6. ADMIN TAB -->
-            <div id="tab-admin" class="tab-content hidden space-y-4">
-                <h2 class="text-xl font-bold text-slate-800">Admin Settings</h2>
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 text-xs md:text-sm">
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <div><p class="font-semibold">Late Fee Auto Calculation</p><p class="text-slate-400 text-xs">₹50 after 25th of every month</p></div>
-                        <input type="checkbox" checked class="w-4 h-4 accent-blue-600">
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <div><p class="font-semibold">Export Data</p><p class="text-slate-400 text-xs">Download all data in Excel / CSV format</p></div>
-                        <button class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg font-semibold border">Export CSV</button>
-                    </div>
-                </div>
-            </div>
+            <!-- OTHER TABS -->
+            <div id="tab-collection" class="tab-content hidden"><h2 class="text-lg font-bold">Collection Section</h2></div>
+            <div id="tab-expenses" class="tab-content hidden"><h2 class="text-lg font-bold">Expenses Section</h2></div>
+            <div id="tab-fic" class="tab-content hidden"><h2 class="text-lg font-bold">FIC Wise Summary</h2></div>
+            <div id="tab-reports" class="tab-content hidden"><h2 class="text-lg font-bold">Reports</h2></div>
+            <div id="tab-admin" class="tab-content hidden"><h2 class="text-lg font-bold">Admin Settings</h2></div>
 
         </main>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 flex justify-around py-2 z-40 text-slate-400 text-[10px]">
-        <button onclick="switchTab('dashboard')" class="flex flex-col items-center space-y-1 text-blue-400" id="mob-dashboard"><i class="fa-solid fa-chart-pie text-base"></i><span>Home</span></button>
-        <button onclick="switchTab('collection')" class="flex flex-col items-center space-y-1" id="mob-collection"><i class="fa-solid fa-indian-rupee-sign text-base"></i><span>Collection</span></button>
-        <button onclick="switchTab('expenses')" class="flex flex-col items-center space-y-1" id="mob-expenses"><i class="fa-solid fa-receipt text-base"></i><span>Expenses</span></button>
-        <button onclick="switchTab('reports')" class="flex flex-col items-center space-y-1" id="mob-reports"><i class="fa-solid fa-chart-line text-base"></i><span>Reports</span></button>
-        <button onclick="switchTab('admin')" class="flex flex-col items-center space-y-1" id="mob-admin"><i class="fa-solid fa-gear text-base"></i><span>More</span></button>
-    </nav>
-
-    <!-- ADD EXPENSE MODAL -->
-    <div id="expenseModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl relative">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="font-bold text-slate-800">Add New Expense</h3>
-                <button onclick="toggleModal(false)" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form class="space-y-3 text-xs">
-                <div><label class="block text-slate-600 font-medium mb-1">Date *</label><input type="date" value="2026-09-10" class="w-full border rounded-lg p-2"></div>
-                <div><label class="block text-slate-600 font-medium mb-1">Category *</label><select class="w-full border rounded-lg p-2"><option>Cleaning</option><option>Lift</option><option>Electricity</option></select></div>
-                <div><label class="block text-slate-600 font-medium mb-1">Amount *</label><input type="number" placeholder="2700" class="w-full border rounded-lg p-2"></div>
-                <div><label class="block text-slate-600 font-medium mb-1">Paid To *</label><input type="text" placeholder="Vendor Name" class="w-full border rounded-lg p-2"></div>
-                <div><label class="block text-slate-600 font-medium mb-1">Description</label><input type="text" placeholder="Gutter Cleaning" class="w-full border rounded-lg p-2"></div>
-                <div class="pt-2 flex justify-end space-x-2">
-                    <button type="button" onclick="toggleModal(false)" class="bg-slate-100 text-slate-600 px-4 py-2 rounded-xl">Cancel</button>
-                    <button type="button" onclick="toggleModal(false)" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-semibold">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- SCRIPT FOR TABS & CHARTS -->
+    <!-- SCRIPT -->
     <script>
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tabId).classList.remove('hidden');
             
-            // Highlight Desktop Menu
-            document.querySelectorAll('aside nav button').forEach(btn => btn.className = 'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition hover:bg-slate-800 hover:text-white');
-            const activeNav = document.getElementById('nav-' + tabId);
-            if(activeNav) activeNav.className = 'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition bg-blue-600 text-white';
-
-            // Highlight Mobile Nav
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('text-blue-400'));
-            const activeMob = document.getElementById('mob-' + tabId);
-            if(activeMob) activeMob.classList.add('text-blue-400');
+            document.querySelectorAll('aside button').forEach(btn => btn.className = 'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition');
+            document.getElementById('nav-' + tabId).className = 'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-lg';
         }
 
-        function toggleModal(show) {
-            document.getElementById('expenseModal').classList.toggle('hidden', !show);
-        }
-
-        // CHARTS SETUP
         window.onload = function() {
             // Bar Chart
-            const ctxBar = document.getElementById('barChart').getContext('2d');
-            new Chart(ctxBar, {
+            new Chart(document.getElementById('barChart'), {
                 type: 'bar',
                 data: {
                     labels: ['Apr 26', 'May 26', 'Jun 26', 'Jul 26', 'Aug 26', 'Sep 26'],
                     datasets: [
-                        { label: 'Collection', data: [55000, 42000, 48000, 52000, 49000, 51000], backgroundColor: '#3b82f6' },
-                        { label: 'Expense', data: [20000, 18000, 22000, 25000, 21000, 24000], backgroundColor: '#f97316' }
+                        { label: 'Collection', data: [55000, 42000, 48000, 52000, 49000, 51000], backgroundColor: '#2563eb', borderRadius: 4 },
+                        { label: 'Expense', data: [20000, 18000, 22000, 25000, 21000, 24000], backgroundColor: '#f97316', borderRadius: 4 }
                     ]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
             // Donut Chart
-            const ctxDonut = document.getElementById('donutChart').getContext('2d');
-            new Chart(ctxDonut, {
+            new Chart(document.getElementById('donutChart'), {
                 type: 'doughnut',
                 data: {
                     labels: ['Lift', 'Cleaning', 'Garbage', 'Electricity', 'Repair', 'Water', 'CCTV', 'Other'],
                     datasets: [{
                         data: [28, 18, 12, 10, 8, 6, 6, 12],
-                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#64748b']
+                        backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#64748b']
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
