@@ -1,206 +1,336 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
-    <title>B9 Chauhan Apartment-03 - Maintenance Register</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; min-width: 1200px; }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800">
+import React, { useState } from 'react';
+import { 
+  LayoutDashboard, Receipt, CircleDollarSign, Users, 
+  BarChart3, Settings, Plus, X, Building2
+} from 'lucide-react';
 
-    <!-- TOP NAVBAR -->
-    <header class="bg-[#0f172a] text-white sticky top-0 z-50 border-b border-slate-800">
-        <div class="flex items-center justify-between px-6 py-3">
-            <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 p-2 rounded-lg"><i class="fa-solid fa-building text-xl text-white"></i></div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">B9 Chauhan Apartment-03</h1>
-                    <p class="text-xs text-slate-400">Maintenance Expense Register</p>
-                </div>
+// Sample Data Setup
+const initialCollections = [
+  { id: 'A101', name: 'Rajesh Sharma', fee: 1000, date: '05-Sep-2026', status: 'Paid', mode: 'UPI' },
+  { id: 'A102', name: 'Sunita Verma', fee: 1000, date: '-', status: 'Pending', mode: '-' },
+  { id: 'A103', name: 'Amit Singh', fee: 1000, date: '03-Sep-2026', status: 'Paid', mode: 'Cash' },
+  { id: 'A104', name: 'Pooja Gupta', fee: 1000, date: '02-Sep-2026', status: 'Paid', mode: 'Bank Transfer' },
+  { id: 'A105', name: 'Sandeep Yadav', fee: 1000, date: '-', status: 'Pending', mode: '-' },
+  { id: 'B101', name: 'Neha Tiwari', fee: 1000, date: '04-Sep-2026', status: 'Paid', mode: 'UPI' },
+];
+
+const initialExpenses = [
+  { id: 1, date: '10-Sep-2026', month: 'Sep 26', category: 'Cleaning', desc: 'Gutter Cleaning', amount: 2700, paidTo: 'Local Vendor' },
+  { id: 2, date: '05-Sep-2026', month: 'Sep 26', category: 'Lift', desc: 'Lift AMC', amount: 5500, paidTo: 'Lift Service' },
+  { id: 3, date: '02-Sep-2026', month: 'Sep 26', category: 'Electricity', desc: 'Common Electricity', amount: 3850, paidTo: 'Electricity Board' },
+  { id: 4, date: '28-Aug-2026', month: 'Aug 26', category: 'Garbage', desc: 'Garbage Collection', amount: 2000, paidTo: 'Hari Om' },
+  { id: 5, date: '25-Aug-2026', month: 'Aug 26', category: 'Repair', desc: 'Water Tank Repair', amount: 4200, paidTo: 'R.K. Plumber' },
+  { id: 6, date: '20-Aug-2026', month: 'Aug 26', category: 'CCTV', desc: 'CCTV Maintenance', amount: 3500, paidTo: 'Security Tech' },
+];
+
+const ficSummary = [
+  { floor: 'Ground Floor', fic: 'Rajesh Sharma', collection: 18000, pending: 2000, expense: 8500, balance: 7500 },
+  { floor: '1st Floor', fic: 'Sunita Verma', collection: 17000, pending: 3000, expense: 7800, balance: 6200 },
+  { floor: '2nd Floor', fic: 'Amit Singh', collection: 16000, pending: 3500, expense: 8200, balance: 4300 },
+  { floor: '3rd Floor', fic: 'Pooja Gupta', collection: 15000, pending: 4000, expense: 7600, balance: 3400 },
+  { floor: '4th Floor', fic: 'Sandeep Yadav', collection: 14000, pending: 3500, expense: 7800, balance: 2700 },
+  { floor: '5th Floor', fic: 'Neha Tiwari', collection: 13000, pending: 3000, expense: 7100, balance: 2900 },
+];
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('Dashboard');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expenses, setExpenses] = useState(initialExpenses);
+
+  const [newExpense, setNewExpense] = useState({
+    date: '2026-09-10', month: 'Sep 2026', category: 'Cleaning', amount: '', paidTo: '', desc: '', paymentMode: 'Cash'
+  });
+
+  const handleAddExpense = (e) => {
+    e.preventDefault();
+    setExpenses([{ id: Date.now(), ...newExpense, amount: Number(newExpense.amount) }, ...expenses]);
+    setIsModalOpen(false);
+    setNewExpense({ date: '2026-09-10', month: 'Sep 2026', category: 'Cleaning', amount: '', paidTo: '', desc: '', paymentMode: 'Cash' });
+  };
+
+  return (
+    <div className="flex h-screen bg-slate-100 overflow-hidden font-sans">
+      {/* Sidebar Navigation */}
+      <div className="w-64 bg-slate-900 text-white flex flex-col justify-between p-4">
+        <div>
+          <div className="flex items-center gap-3 mb-8 px-2">
+            <div className="bg-blue-600 p-2 rounded-lg">
+              <Building2 className="text-white" size={20} />
             </div>
-            <div class="flex items-center space-x-4">
-                <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
-                    <i class="fa-regular fa-calendar text-slate-400"></i>
-                    <select class="bg-transparent text-slate-200 focus:outline-none cursor-pointer">
-                        <option>Sep 2026</option>
-                        <option>Aug 2026</option>
-                    </select>
-                </div>
-                <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
-                    <i class="fa-solid fa-user-shield text-blue-400"></i>
-                    <span>Admin</span>
-                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
-                </div>
+            <div>
+              <h1 className="font-bold text-sm leading-tight">B9 Chauhan Apartment-03</h1>
+              <p className="text-xs text-slate-400">Expense Register</p>
             </div>
+          </div>
+
+          <nav className="space-y-1">
+            {[
+              { name: 'Dashboard', icon: LayoutDashboard },
+              { name: 'Collection', icon: Receipt },
+              { name: 'Expenses', icon: CircleDollarSign },
+              { name: 'FIC Wise', icon: Users },
+              { name: 'Reports', icon: BarChart3 },
+              { name: 'Admin', icon: Settings },
+            ].map((item) => (
+              <button
+                key={item.name}
+                onClick={() => setActiveTab(item.name)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === item.name ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                }`}
+              >
+                <item.icon size={18} />
+                {item.name}
+              </button>
+            ))}
+          </nav>
         </div>
-    </header>
 
-    <div class="flex min-h-[calc(100vh-61px)]">
-        
-        <!-- SIDEBAR -->
-        <aside class="w-64 bg-[#0f172a] text-slate-300 flex-shrink-0 p-4 border-r border-slate-800 space-y-1">
-            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-lg">
-                <i class="fa-solid fa-chart-pie w-5 text-sm"></i><span>Dashboard</span>
-            </button>
-            <button onclick="switchTab('collection')" id="nav-collection" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-indian-rupee-sign w-5 text-sm"></i><span>Collection</span>
-            </button>
-            <button onclick="switchTab('expenses')" id="nav-expenses" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-receipt w-5 text-sm"></i><span>Expenses</span>
-            </button>
-            <button onclick="switchTab('fic')" id="nav-fic" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-users w-5 text-sm"></i><span>FIC Wise</span>
-            </button>
-            <button onclick="switchTab('reports')" id="nav-reports" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-chart-line w-5 text-sm"></i><span>Reports</span>
-            </button>
-            <button onclick="switchTab('admin')" id="nav-admin" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-gear w-5 text-sm"></i><span>Admin</span>
-            </button>
-        </aside>
+        <div className="text-xs text-slate-500 text-center py-2 border-t border-slate-800">
+          Status: Active | Sep 2026
+        </div>
+      </div>
 
-        <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 p-6 overflow-y-auto">
-            
-            <!-- 1. DASHBOARD TAB -->
-            <div id="tab-dashboard" class="tab-content space-y-6">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-800">Dashboard</h2>
-                    <p class="text-xs text-slate-400">Building Overview</p>
-                </div>
-
-                <!-- TOP STAT CARDS -->
-                <div class="grid grid-cols-4 gap-4">
-                    <div class="bg-emerald-50/60 border border-emerald-100 p-4 rounded-2xl flex justify-between items-center">
-                        <div>
-                            <p class="text-xs font-semibold text-emerald-800">Total Collection</p>
-                            <h3 class="text-2xl font-bold text-emerald-950 mt-1">₹ 1,15,000</h3>
-                            <span class="text-[10px] text-emerald-600 font-medium">(Apr – Sep 2026)</span>
-                        </div>
-                        <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-emerald-200"><i class="fa-solid fa-indian-rupee-sign"></i></div>
-                    </div>
-
-                    <div class="bg-rose-50/60 border border-rose-100 p-4 rounded-2xl flex justify-between items-center">
-                        <div>
-                            <p class="text-xs font-semibold text-rose-800">Total Expenses</p>
-                            <h3 class="text-2xl font-bold text-rose-950 mt-1">₹ 90,755</h3>
-                            <span class="text-[10px] text-rose-600 font-medium">(Apr – Sep 2026)</span>
-                        </div>
-                        <div class="w-10 h-10 bg-rose-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-rose-200"><i class="fa-solid fa-arrow-trend-down"></i></div>
-                    </div>
-
-                    <div class="bg-blue-50/60 border border-blue-100 p-4 rounded-2xl flex justify-between items-center">
-                        <div>
-                            <p class="text-xs font-semibold text-blue-800">Current Balance</p>
-                            <h3 class="text-2xl font-bold text-blue-950 mt-1">₹ 24,245</h3>
-                            <span class="text-[10px] text-blue-600 font-medium">(Apr – Sep 2026)</span>
-                        </div>
-                        <div class="w-10 h-10 bg-blue-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-blue-200"><i class="fa-solid fa-wallet"></i></div>
-                    </div>
-
-                    <div class="bg-purple-50/60 border border-purple-100 p-4 rounded-2xl flex justify-between items-center">
-                        <div>
-                            <p class="text-xs font-semibold text-purple-800">Reserve Fund</p>
-                            <h3 class="text-2xl font-bold text-purple-950 mt-1">₹ 43,527</h3>
-                            <span class="text-[10px] text-purple-600 font-medium">(Available)</span>
-                        </div>
-                        <div class="w-10 h-10 bg-purple-500 text-white rounded-xl flex items-center justify-center text-lg shadow-md shadow-purple-200"><i class="fa-solid fa-shield-halved"></i></div>
-                    </div>
-                </div>
-
-                <!-- MINI STATS ROW -->
-                <div class="grid grid-cols-5 gap-4">
-                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
-                        <p class="text-[11px] font-medium text-slate-500">Total Flats</p>
-                        <p class="text-lg font-bold text-slate-800">26</p>
-                    </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
-                        <p class="text-[11px] font-medium text-slate-500">Paid Flats</p>
-                        <p class="text-lg font-bold text-emerald-600">18</p>
-                    </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
-                        <p class="text-[11px] font-medium text-slate-500">Pending Flats</p>
-                        <p class="text-lg font-bold text-rose-600">8</p>
-                    </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
-                        <p class="text-[11px] font-medium text-slate-500">Collection %</p>
-                        <p class="text-lg font-bold text-amber-600">69%</p>
-                    </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200/80 text-center shadow-sm">
-                        <p class="text-[11px] font-medium text-slate-500">Expense %</p>
-                        <p class="text-lg font-bold text-blue-600">79%</p>
-                    </div>
-                </div>
-
-                <!-- CHARTS ROW -->
-                <div class="grid grid-cols-3 gap-6">
-                    <div class="col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <h4 class="text-xs font-bold text-slate-700 mb-4 uppercase tracking-wider">Collection vs Expense (Last 6 Months)</h4>
-                        <div class="h-64"><canvas id="barChart"></canvas></div>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                        <h4 class="text-xs font-bold text-slate-700 mb-4 uppercase tracking-wider">Expense by Category</h4>
-                        <div class="h-64 flex justify-center"><canvas id="donutChart"></canvas></div>
-                    </div>
-                </div>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-y-auto">
+        {/* Header Bar */}
+        <header className="bg-white border-b px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+          <h2 className="text-xl font-bold text-slate-800">{activeTab}</h2>
+          <div className="flex items-center gap-4">
+            <select className="border rounded-md px-3 py-1.5 text-sm bg-slate-50 font-medium">
+              <option>Sep 2026</option>
+              <option>Aug 2026</option>
+            </select>
+            <div className="flex items-center gap-2 border-l pl-4">
+              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">
+                AD
+              </div>
+              <span className="text-sm font-medium text-slate-700">Admin</span>
             </div>
+          </div>
+        </header>
 
-            <!-- OTHER TABS -->
-            <div id="tab-collection" class="tab-content hidden"><h2 class="text-lg font-bold">Collection Section</h2></div>
-            <div id="tab-expenses" class="tab-content hidden"><h2 class="text-lg font-bold">Expenses Section</h2></div>
-            <div id="tab-fic" class="tab-content hidden"><h2 class="text-lg font-bold">FIC Wise Summary</h2></div>
-            <div id="tab-reports" class="tab-content hidden"><h2 class="text-lg font-bold">Reports</h2></div>
-            <div id="tab-admin" class="tab-content hidden"><h2 class="text-lg font-bold">Admin Settings</h2></div>
+        {/* Dynamic Screen Content */}
+        <div className="p-6 space-y-6">
+          {activeTab === 'Dashboard' && (
+            <>
+              {/* Stat Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <StatCard title="Total Collection" amount="₹ 1,15,000" badge="Apr - Sep 2026" badgeBg="bg-emerald-50 text-emerald-600" color="bg-emerald-500" />
+                <StatCard title="Total Expenses" amount="₹ 90,755" badge="Apr - Sep 2026" badgeBg="bg-rose-50 text-rose-600" color="bg-rose-500" />
+                <StatCard title="Current Balance" amount="₹ 24,245" badge="Apr - Sep 2026" badgeBg="bg-blue-50 text-blue-600" color="bg-blue-500" />
+                <StatCard title="Reserve Fund" amount="₹ 43,527" badge="Available" badgeBg="bg-purple-50 text-purple-600" color="bg-purple-500" />
+              </div>
 
-        </main>
+              {/* Status Badges */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <MiniCard title="Total Flats" value="26" color="bg-blue-50 text-blue-700 border-blue-200" />
+                <MiniCard title="Paid Flats" value="18" color="bg-emerald-50 text-emerald-700 border-emerald-200" />
+                <MiniCard title="Pending Flats" value="8" color="bg-rose-50 text-rose-700 border-rose-200" />
+                <MiniCard title="Collection %" value="69%" color="bg-amber-50 text-amber-700 border-amber-200" />
+                <MiniCard title="Expense %" value="79%" color="bg-cyan-50 text-cyan-700 border-cyan-200" />
+              </div>
+
+              {/* Visual Breakdown Placeholder */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-5 rounded-xl border shadow-sm md:col-span-2">
+                  <h3 className="text-sm font-semibold text-slate-700 mb-4">Collection vs Expense (Last 6 Months)</h3>
+                  <div className="h-48 bg-slate-50 border border-dashed rounded-lg flex items-center justify-center text-slate-400 font-medium text-sm">
+                    Collection vs Expenses Bar Chart Area
+                  </div>
+                </div>
+                <div className="bg-white p-5 rounded-xl border shadow-sm">
+                  <h3 className="text-sm font-semibold text-slate-700 mb-4">Expense by Category</h3>
+                  <div className="h-48 bg-slate-50 border border-dashed rounded-lg flex items-center justify-center text-slate-400 font-medium text-sm text-center px-4">
+                    Lift 28% | Cleaning 18% | Electricity 10%
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {activeTab === 'Collection' && (
+            <div className="bg-white rounded-xl border shadow-sm p-5 space-y-4">
+              <h3 className="font-bold text-slate-800">Maintenance Collection Register</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50 border-y text-slate-600">
+                    <tr>
+                      <th className="py-3 px-4">Flat No.</th>
+                      <th className="py-3 px-4">Resident Name</th>
+                      <th className="py-3 px-4">Monthly Fee</th>
+                      <th className="py-3 px-4">Paid Date</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4">Payment Mode</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {initialCollections.map((col) => (
+                      <tr key={col.id} className="hover:bg-slate-50">
+                        <td className="py-3 px-4 font-semibold">{col.id}</td>
+                        <td className="py-3 px-4">{col.name}</td>
+                        <td className="py-3 px-4">₹{col.fee}</td>
+                        <td className="py-3 px-4">{col.date}</td>
+                        <td className="py-3 px-4">
+                          <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${col.status === 'Paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+                            {col.status}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4">{col.mode}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'Expenses' && (
+            <div className="bg-white rounded-xl border shadow-sm p-5 space-y-4">
+              <div className="flex justify-between items-center">
+                <input type="text" placeholder="Search description..." className="border rounded-lg px-3 py-1.5 text-sm w-64" />
+                <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+                  <Plus size={16} /> Add Expense
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50 border-y text-slate-600">
+                    <tr>
+                      <th className="py-3 px-4">Date</th>
+                      <th className="py-3 px-4">Month</th>
+                      <th className="py-3 px-4">Category</th>
+                      <th className="py-3 px-4">Description</th>
+                      <th className="py-3 px-4">Amount</th>
+                      <th className="py-3 px-4">Paid To</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {expenses.map((exp) => (
+                      <tr key={exp.id} className="hover:bg-slate-50">
+                        <td className="py-3 px-4">{exp.date}</td>
+                        <td className="py-3 px-4">{exp.month}</td>
+                        <td className="py-3 px-4">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">{exp.category}</span>
+                        </td>
+                        <td className="py-3 px-4 font-medium">{exp.desc}</td>
+                        <td className="py-3 px-4 font-bold text-slate-800">₹{exp.amount.toLocaleString('en-IN')}</td>
+                        <td className="py-3 px-4">{exp.paidTo}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'FIC Wise' && (
+            <div className="bg-white rounded-xl border shadow-sm p-5">
+              <h3 className="font-bold text-slate-800 mb-4">Floor In-Charge (FIC) Summary</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50 border-y text-slate-600">
+                    <tr>
+                      <th className="py-3 px-4">Floor</th>
+                      <th className="py-3 px-4">FIC Name</th>
+                      <th className="py-3 px-4">Collection</th>
+                      <th className="py-3 px-4">Pending</th>
+                      <th className="py-3 px-4">Expense</th>
+                      <th className="py-3 px-4">Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {ficSummary.map((item, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50">
+                        <td className="py-3 px-4 font-medium">{item.floor}</td>
+                        <td className="py-3 px-4">{item.fic}</td>
+                        <td className="py-3 px-4 text-emerald-600 font-semibold">₹{item.collection.toLocaleString('en-IN')}</td>
+                        <td className="py-3 px-4 text-rose-600 font-semibold">₹{item.pending.toLocaleString('en-IN')}</td>
+                        <td className="py-3 px-4 text-slate-700">₹{item.expense.toLocaleString('en-IN')}</td>
+                        <td className="py-3 px-4 font-bold text-blue-600">₹{item.balance.toLocaleString('en-IN')}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Expense Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-lg rounded-xl shadow-lg p-6 relative">
+            <div className="flex justify-between items-center border-b pb-3 mb-4">
+              <h3 className="font-bold text-slate-800">Add New Expense</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600"><X size={20}/></button>
+            </div>
+            <form onSubmit={handleAddExpense} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Date *</label>
+                  <input type="date" required value={newExpense.date} onChange={e => setNewExpense({...newExpense, date: e.target.value})} className="w-full border rounded-lg p-2 text-sm mt-1" />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Category *</label>
+                  <select value={newExpense.category} onChange={e => setNewExpense({...newExpense, category: e.target.value})} className="w-full border rounded-lg p-2 text-sm mt-1">
+                    <option>Cleaning</option>
+                    <option>Lift</option>
+                    <option>Electricity</option>
+                    <option>Garbage</option>
+                    <option>Repair</option>
+                    <option>CCTV</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Amount *</label>
+                  <input type="number" required placeholder="2700" value={newExpense.amount} onChange={e => setNewExpense({...newExpense, amount: e.target.value})} className="w-full border rounded-lg p-2 text-sm mt-1" />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Paid To *</label>
+                  <input type="text" required placeholder="Local Vendor" value={newExpense.paidTo} onChange={e => setNewExpense({...newExpense, paidTo: e.target.value})} className="w-full border rounded-lg p-2 text-sm mt-1" />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-600">Description *</label>
+                <input type="text" required placeholder="Gutter Cleaning" value={newExpense.desc} onChange={e => setNewExpense({...newExpense, desc: e.target.value})} className="w-full border rounded-lg p-2 text-sm mt-1" />
+              </div>
+
+              <div className="flex justify-end gap-3 border-t pt-4">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 border rounded-lg text-sm font-medium hover:bg-slate-50">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700">Save Expense</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
 
-    <!-- SCRIPT -->
-    <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            
-            document.querySelectorAll('aside button').forEach(btn => btn.className = 'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition');
-            document.getElementById('nav-' + tabId).className = 'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-lg';
-        }
+// Subcomponents
+function StatCard({ title, amount, badge, badgeBg, color }) {
+  return (
+    <div className="bg-white p-4 rounded-xl border shadow-sm relative overflow-hidden">
+      <div className={`absolute top-0 left-0 w-1 h-full ${color}`}></div>
+      <p className="text-xs font-medium text-slate-500">{title}</p>
+      <h3 className="text-xl font-bold text-slate-800 mt-1">{amount}</h3>
+      <span className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full mt-2 ${badgeBg}`}>{badge}</span>
+    </div>
+  );
+}
 
-        window.onload = function() {
-            // Bar Chart
-            new Chart(document.getElementById('barChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['Apr 26', 'May 26', 'Jun 26', 'Jul 26', 'Aug 26', 'Sep 26'],
-                    datasets: [
-                        { label: 'Collection', data: [55000, 42000, 48000, 52000, 49000, 51000], backgroundColor: '#2563eb', borderRadius: 4 },
-                        { label: 'Expense', data: [20000, 18000, 22000, 25000, 21000, 24000], backgroundColor: '#f97316', borderRadius: 4 }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-
-            // Donut Chart
-            new Chart(document.getElementById('donutChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Lift', 'Cleaning', 'Garbage', 'Electricity', 'Repair', 'Water', 'CCTV', 'Other'],
-                    datasets: [{
-                        data: [28, 18, 12, 10, 8, 6, 6, 12],
-                        backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#64748b']
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-    </script>
-</body>
-</html>
+function MiniCard({ title, value, color }) {
+  return (
+    <div className={`p-3 rounded-lg border flex justify-between items-center ${color}`}>
+      <span className="text-xs font-medium">{title}</span>
+      <span className="text-lg font-bold">{value}</span>
+    </div>
+  );
+}
